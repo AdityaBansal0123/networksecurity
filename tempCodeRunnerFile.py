@@ -1,0 +1,1 @@
+dataingestionartifact = data_ingestion.initiate_data_ingestion()
