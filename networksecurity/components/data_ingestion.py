@@ -11,7 +11,6 @@ import sys
 import numpy as np
 import pandas as pd
 import pymongo
-from typing import List
 from sklearn.model_selection import train_test_split
 from dotenv import load_dotenv
 load_dotenv()
@@ -69,15 +68,16 @@ class DataIngestion:
             )
             
             dir_path = os.path.dirname(self.data_ingestion_config.training_file_path)
-            
             os.makedirs(dir_path, exist_ok=True)
+
+            dir_path1 = os.path.dirname(self.data_ingestion_config.test_file_path)
+            os.makedirs(dir_path1, exist_ok=True)
             
             logging.info(f"Exporting train and test file path.")
             
             train_set.to_csv(
                 self.data_ingestion_config.training_file_path, index=False, header=True
             )
-
             test_set.to_csv(
                 self.data_ingestion_config.test_file_path, index=False, header=True
             )
@@ -95,6 +95,6 @@ class DataIngestion:
             dataingestionartifact=DataIngestionArtifact(trained_file_path=self.data_ingestion_config.training_file_path,
                                                         test_file_path=self.data_ingestion_config.test_file_path)
             return dataingestionartifact
-
+        
         except Exception as e:
             raise NetworkSecurityException
