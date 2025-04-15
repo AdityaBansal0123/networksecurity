@@ -1,0 +1,93 @@
+Abnormal_URL:
+  drift_status: false
+  p_value: 1.0
+DNSRecord:
+  drift_status: false
+  p_value: 1.0
+Domain_registeration_length:
+  drift_status: false
+  p_value: 0.9999999999342908
+Favicon:
+  drift_status: false
+  p_value: 0.9982765245128746
+Google_Index:
+  drift_status: false
+  p_value: 1.0
+HTTPS_token:
+  drift_status: false
+  p_value: 1.0
+Iframe:
+  drift_status: false
+  p_value: 0.9999082411057828
+Links_in_tags:
+  drift_status: false
+  p_value: 0.9999999999999988
+Links_pointing_to_page:
+  drift_status: false
+  p_value: 0.9999943962701717
+Page_Rank:
+  drift_status: false
+  p_value: 0.9090614786489536
+Prefix_Suffix:
+  drift_status: false
+  p_value: 0.9999999999983421
+Redirect:
+  drift_status: false
+  p_value: 0.8156832367960523
+Request_URL:
+  drift_status: false
+  p_value: 1.0
+Result:
+  drift_status: false
+  p_value: 0.9988389187736353
+RightClick:
+  drift_status: false
+  p_value: 1.0
+SFH:
+  drift_status: false
+  p_value: 1.0
+SSLfinal_State:
+  drift_status: false
+  p_value: 0.09419443088950818
+Shortining_Service:
+  drift_status: false
+  p_value: 0.999999992535637
+Statistical_report:
+  drift_status: false
+  p_value: 0.9897852390942186
+Submitting_to_email:
+  drift_status: false
+  p_value: 1.0
+URL_Length:
+  drift_status: false
+  p_value: 0.9977266740617147
+URL_of_Anchor:
+  drift_status: false
+  p_value: 0.9513122013531654
+age_of_domain:
+  drift_status: false
+  p_value: 0.9999977967337238
+double_slash_redirecting:
+  drift_status: false
+  p_value: 0.9999999999999988
+having_At_Symbol:
+  drift_status: false
+  p_value: 0.9999434453177257
+having_IP_Address:
+  drift_status: false
+  p_value: 0.9999999999999999
+having_Sub_Domain:
+  drift_status: false
+  p_value: 0.9999082411057828
+on_mouseover:
+  drift_status: false
+  p_value: 0.9999999994771812
+popUpWidnow:
+  drift_status: false
+  p_value: 0.9996274498538684
+port:
+  drift_status: false
+  p_value: 0.8899146247712988
+web_traffic:
+  drift_status: false
+  p_value: 0.9944502506438935
