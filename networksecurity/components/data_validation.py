@@ -18,7 +18,7 @@ class DataValidation:
             self._schema_config = read_yaml_file(SCHEMA_FILE_PATH)
         except Exception as e:
             raise NetworkSecurityException(e,sys)
-
+        
     @staticmethod
     def read_data(file_path)->pd.DataFrame:
         try:
@@ -53,7 +53,8 @@ class DataValidation:
                 report.update({column:{
                     "p_value":float(is_same_dist.pvalue),
                     "drift_status":is_found
-                }})
+                    
+                    }})
             drift_report_file_path = self.data_validation_config.drift_report_file_path
 
             #Create directory
@@ -90,7 +91,9 @@ class DataValidation:
 
             train_dataframe.to_csv(
                 self.data_validation_config.valid_train_file_path, index=False, header=True
+
             )
+
             test_dataframe.to_csv(
                 self.data_validation_config.valid_test_file_path, index=False, header=True
             )
@@ -106,3 +109,6 @@ class DataValidation:
             return data_validation_artifact
         except Exception as e:
             raise NetworkSecurityException(e,sys)
+
+
+
