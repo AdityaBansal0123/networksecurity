@@ -9,4 +9,6 @@ pyaml
 xgboost
 mlflow
 dagshub
+fastapi
+uvicorn
 # -e .

@@ -8,16 +8,16 @@ from networksecurity.utils.ml_utils.model.estimator import NetworkModel
 from networksecurity.utils.main_utils.utils import save_object,load_object
 from networksecurity.utils.main_utils.utils import load_numpy_array_data,evaluate_models
 from networksecurity.utils.ml_utils.metric.classification_metric import get_classification_score
-from sklearn.metrics import r2_score
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import (
     AdaBoostClassifier,
     GradientBoostingClassifier,
     RandomForestClassifier,
 )
-from sklearn.naive_bayes import GaussianNB
 from xgboost import XGBClassifier
 import mlflow
+import dagshub
+dagshub.init(repo_owner='AdityaBansal0123', repo_name='networksecurity', mlflow=True)
 
 class ModelTrainer:
     def __init__(self,model_trainer_config:ModelTrainerConfig,data_transformation_artifact:DataTransformationArtifact):
@@ -116,7 +116,7 @@ class ModelTrainer:
         save_object("final_model/model.pkl",best_model)
         
 
-        ## Model Trainer Artifact
+        ## Model Trainer Artifact 
         model_trainer_artifact=ModelTrainerArtifact(trained_model_file_path=self.model_trainer_config.trained_model_file_path,
                              train_metric_artifact=classification_train_metric,
                              test_metric_artifact=classification_test_metric
