@@ -14,7 +14,6 @@ from sklearn.ensemble import (
     GradientBoostingClassifier,
     RandomForestClassifier,
 )
-from xgboost import XGBClassifier
 import mlflow
 import dagshub
 dagshub.init(repo_owner='AdityaBansal0123', repo_name='networksecurity', mlflow=True)
@@ -43,8 +42,7 @@ class ModelTrainer:
         "DecisionTree Classifier": DecisionTreeClassifier(),
         "RandomForest Classifier": RandomForestClassifier(),
         "AdaBoost Classifier": AdaBoostClassifier(),
-        "Gradient Boosting": GradientBoostingClassifier(),
-        "XGBoost Classifier": XGBClassifier()
+        "Gradient Boosting": GradientBoostingClassifier()
         }
 
         params = {
@@ -69,16 +67,6 @@ class ModelTrainer:
             "AdaBoost Classifier": {
                 'learning_rate': [0.1, 0.01, 0.001],
                 'n_estimators': [8, 16, 32, 64, 128, 256]
-            },
-            "XGBoost Classifier": {
-                'n_estimators': [100, 200, 500],
-                'learning_rate': [0.01, 0.1, 0.3],
-                'max_depth': [3, 5, 10],
-                'subsample': [0.6, 0.8, 1.0],
-                'colsample_bytree': [0.6, 0.8, 1.0],
-                'gamma': [0, 0.1, 0.3],
-                'reg_alpha': [0, 0.01, 0.1],
-                'reg_lambda': [1, 1.5, 2]
             }
         }
 
