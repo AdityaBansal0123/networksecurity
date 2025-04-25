@@ -1,5 +1,7 @@
 import os
 import sys
+from networksecurity.cloud.s3_syncer import S3Sync
+from networksecurity.constant.training_pipeline import TRAINING_BUCKET_NAME
 from networksecurity.exception.exception import NetworkSecurityException 
 from networksecurity.logging.logger import logging
 from networksecurity.components.data_ingestion import DataIngestion
@@ -23,7 +25,7 @@ from networksecurity.entity.artifact_entity import (
 class TrainingPipeline:
     def __init__(self):
         self.training_pipeline_config = TrainingPipelineConfig()
-
+        self.s3_sync = S3Sync()
     def start_data_ingestion(self):
         try:
             self.data_ingestion_config = DataIngestionConfig(training_pipeline_config = self.training_pipeline_config)
@@ -71,11 +73,33 @@ class TrainingPipeline:
         
         except Exception as e:
             raise NetworkSecurityException(e,sys)
+    
+    # Artifact dir to s3 bucket
+    def sync_artifact_dir_to_s3(self):
+        try:
+            aws_bucket_url = f"s3://{TRAINING_BUCKET_NAME}/artifact/{self.training_pipeline_config.timestamp}"
+            self.s3_sync.sync_folder_from_s3(folder = self.training_pipeline_config.artifact_dir,aws_bucket_url = aws_bucket_url)
+            logging.info(f"Syncing artifact dir to s3 bucket {TRAINING_BUCKET_NAME} completed")
+        except Exception as e:
+            raise NetworkSecurityException(e,sys)
+
+    # Syncing final_model to S3
+    def sync_final_model_to_s3(self):
+        try:
+            aws_bucket_url = f"s3://{TRAINING_BUCKET_NAME}/final_model/{self.training_pipeline_config.timestamp}"
+            self.s3_sync.sync_folder_to_s3(folder = self.training_pipeline_config.model_dir,aws_bucket_url = aws_bucket_url)
+            logging.info(f"Syncing final model to s3 bucket {TRAINING_BUCKET_NAME} completed")
+        except Exception as e:
+            raise NetworkSecurityException(e,sys)
         
     def run_pipeline(self):
         data_ingestion_artifact=self.start_data_ingestion()
         data_validation_artifact = self.start_data_validation(data_ingestion_artifact = data_ingestion_artifact)
         data_transformation_artifact = self.start_data_transformation(data_validation_artifact = data_validation_artifact)
         model_trainer_artifact = self.start_Model_trainer(data_transformation_artifact = data_transformation_artifact)
+        
+        self.sync_artifact_dir_to_s3()
+        self.sync_final_model_to_s3()
+        logging.info("Training pipeline completed")
         
         return model_trainer_artifact
