@@ -14,6 +14,7 @@ from sklearn.ensemble import (
     GradientBoostingClassifier,
     RandomForestClassifier,
 )
+from xgboost import XGBClassifier
 import mlflow
 import dagshub
 dagshub.init(repo_owner='AdityaBansal0123', repo_name='networksecurity', mlflow=True)
@@ -42,31 +43,44 @@ class ModelTrainer:
         "DecisionTree Classifier": DecisionTreeClassifier(),
         "RandomForest Classifier": RandomForestClassifier(),
         "AdaBoost Classifier": AdaBoostClassifier(),
-        "Gradient Boosting": GradientBoostingClassifier()
+        "Gradient Boosting": GradientBoostingClassifier(),
+        "XGBoost": XGBClassifier(),
         }
 
-        params = {
+        params ={
             "DecisionTree Classifier": {
-                'criterion': ['gini', 'entropy'],  
-                'splitter': ['best', 'random'],
-                'max_features': ['sqrt', 'log2', None],  
+                'criterion': ['gini', 'entropy'],
+                'max_depth': [None, 10],
+                'max_features': ['sqrt', None]
             },
+
             "RandomForest Classifier": {
-                'criterion': ['gini', 'entropy'],  
-                'max_features': ['sqrt', 'log2', None],
-                'n_estimators': [8, 16, 32, 128, 256]
+                'criterion': ['gini'],
+                'n_estimators': [64, 128],
+                'max_depth': [None, 10],
+                'max_features': ['sqrt'],
             },
+
             "Gradient Boosting": {
-                'loss': ['log_loss', 'exponential'],  
-                'learning_rate': [0.1, 0.01, 0.05, 0.001],
-                'subsample': [0.6, 0.7, 0.75, 0.85, 0.9],
-                'criterion': ['squared_error', 'friedman_mse'],  
-                'max_features': ['sqrt', 'log2', None],  
-                'n_estimators': [8, 16, 32, 64, 128, 256]
+                'loss': ['log_loss'],
+                'learning_rate': [0.1, 0.01],
+                'subsample': [0.7, 0.9],
+                'n_estimators': [64, 128],
+                'max_depth': [3, 5]
             },
+
             "AdaBoost Classifier": {
-                'learning_rate': [0.1, 0.01, 0.001],
-                'n_estimators': [8, 16, 32, 64, 128, 256]
+                'learning_rate': [0.1, 0.01],
+                'n_estimators': [64, 128]
+            },
+
+            "XGBoost": {
+                'learning_rate': [0.1, 0.01],
+                'n_estimators': [64, 128],
+                'max_depth': [3, 5],
+                'subsample': [0.7],
+                'colsample_bytree': [0.7],
+                'booster': ['gbtree']
             }
         }
 
