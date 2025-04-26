@@ -14,7 +14,6 @@ from sklearn.ensemble import (
     GradientBoostingClassifier,
     RandomForestClassifier,
 )
-from xgboost import XGBClassifier
 import mlflow
 import dagshub
 dagshub.init(repo_owner='AdityaBansal0123', repo_name='networksecurity', mlflow=True)
@@ -40,48 +39,47 @@ class ModelTrainer:
 
     def train_model(self,X_train,y_train,x_test,y_test):
         models = {
-        "DecisionTree Classifier": DecisionTreeClassifier(),
-        "RandomForest Classifier": RandomForestClassifier(),
-        "AdaBoost Classifier": AdaBoostClassifier(),
-        "Gradient Boosting": GradientBoostingClassifier(),
-        "XGBoost": XGBClassifier(),
+            "DecisionTree Classifier": DecisionTreeClassifier(),
+            "RandomForest Classifier": RandomForestClassifier(),
+            "AdaBoost Classifier": AdaBoostClassifier(),
+            "Gradient Boosting": GradientBoostingClassifier(),
         }
 
         params ={
             "DecisionTree Classifier": {
                 'criterion': ['gini', 'entropy'],
-                'max_depth': [None, 10],
-                'max_features': ['sqrt', None]
+                'splitter': ['best', 'random'],
+                'max_depth': [None, 10, 20],
+                'min_samples_split': [2, 5],
+                'min_samples_leaf': [1, 2],
+                'max_features': ['sqrt', 'log2', None]
             },
 
             "RandomForest Classifier": {
-                'criterion': ['gini'],
-                'n_estimators': [64, 128],
-                'max_depth': [None, 10],
-                'max_features': ['sqrt'],
+                'criterion': ['gini', 'entropy'],
+                'n_estimators': [64, 128, 256],
+                'max_depth': [None, 10, 20],
+                'min_samples_split': [2, 5],
+                'min_samples_leaf': [1, 2],
+                'max_features': ['sqrt', 'log2'],
+                'bootstrap': [True, False]
             },
 
             "Gradient Boosting": {
                 'loss': ['log_loss'],
-                'learning_rate': [0.1, 0.01],
-                'subsample': [0.7, 0.9],
-                'n_estimators': [64, 128],
-                'max_depth': [3, 5]
+                'learning_rate': [0.1, 0.01, 0.001],
+                'n_estimators': [64, 128, 256],
+                'subsample': [0.6, 0.8, 1.0],
+                'max_depth': [3, 5, 7],
+                'min_samples_split': [2, 5],
+                'min_samples_leaf': [1, 2]
             },
 
             "AdaBoost Classifier": {
-                'learning_rate': [0.1, 0.01],
-                'n_estimators': [64, 128]
+                'learning_rate': [1.0, 0.1, 0.01],
+                'n_estimators': [50, 100, 200],
+                'algorithm': ['SAMME', 'SAMME.R']
             },
-
-            "XGBoost": {
-                'learning_rate': [0.1, 0.01],
-                'n_estimators': [64, 128],
-                'max_depth': [3, 5],
-                'subsample': [0.7],
-                'colsample_bytree': [0.7],
-                'booster': ['gbtree']
-            }
         }
 
         model_report:dict=evaluate_models(X_train=X_train,y_train=y_train,X_test=x_test,y_test=y_test,
