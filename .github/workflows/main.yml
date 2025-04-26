@@ -53,6 +53,10 @@ jobs:
     needs: build-and-push-ecr-image
     runs-on: self-hosted
     steps:
+      - name: Clean up unused Docker resources (Pre-deployment)
+        run: |
+          docker system prune -f
+
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -83,6 +87,6 @@ jobs:
           -e AWS_REGION=${{ secrets.AWS_REGION }} \
           ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
 
-      - name: Clean up unused Docker resources
+      - name: Clean up unused Docker resources (Post-deployment)
         run: |
           docker system prune -f
