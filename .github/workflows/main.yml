@@ -53,7 +53,7 @@ jobs:
 
   continuous-deployment:
     needs: build-and-push-dockerhub-image
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
