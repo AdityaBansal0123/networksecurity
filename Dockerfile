@@ -1,8 +1,14 @@
-FROM python:3.10-slim-buster
+# Use a base image
+FROM python:3.11-slim
+
+# Set working directory
 WORKDIR /app
-COPY . /app
 
-RUN apt update -y && apt install awscli -y
+# Copy code
+COPY . .
 
-RUN apt-get update && pip install -r requirements.txt
-CMD ["python3", "app.py"]
+# Install dependencies
+RUN pip install -r requirements.txt
+
+# Run app
+CMD ["python", "app.py"]
